@@ -29,49 +29,55 @@ void agregarEstudiante() {
 }
 
 // Función para mostrar estudiantes (READ)
-void modificarEstudiante() { 
+void mostrarEstudiantes() {
+    ifstream archivo("estudiantes.txt");
+    Estudiante e;
+
+    if (archivo.is_open()) {
+        cout << "\n--- Lista de Estudiantes ---\n";
+        while (archivo >> e.nombre >> e.carnet >> e.edad) {
+            cout << "Nombre: " << e.nombre 
+                 << ", Carnet: " << e.carnet
+                 << ", Edad: " << e.edad << endl;
+        }
+        archivo.close();
+    } else {
+        cout << "Error al abrir el archivo.\n";
+    }
+}
+
+ void modificarEstudiante() { 
     ifstream archivo("estudiantes.txt");
     ofstream temp("temp.txt");
-
+    Estudiante e;
     string buscado;
     bool modificado = false;
-
     cout << "Ingrese carnet a modificar: ";
     cin >> buscado;
-
-    cout <<  "nombre (sin espacios): ";
+    
+   cout << "Nombre (sin espacios): ";
     cin >> e.nombre;
-    cout << "Nuevo carnet: ";
+    cout << "Carnet: ";
     cin >> e.carnet;
-    cout << "Nueva edad: ";
+    cout << "Edad: ";
     cin >> e.edad;
 
-    if (archivo.is_open() && temp.is_open()) {
-        Estudiante e;
-
+      if (archivo.is_open() && temp.is_open()) {
         while (archivo >> e.nombre >> e.carnet >> e.edad) {
             if (e.carnet == buscado) {
-                temp << e.nombre << " " << e.nombre << " " << e.edad << endl;
-                modificado = true;
-
-                cout << "\nEstudiante modificado:\n";
-                cout << "Nombre: " << e.nombre << endl;
-                cout << "Carnet: " << e.carnet << endl;
-                cout << "Edad: " << e.edad << endl;
+                modificado = true;               // No se copia: se “borra”
             } else {
                 temp << e.nombre << " " << e.carnet << " " << e.edad << endl;
             }
         }
-
-        archivo.close();
+    archivo.close();
         temp.close();
         rename("temp.txt", "estudiantes.txt");
 
         if (!modificado)
-            cout << "Estudiante no encontrado.\n";
-
+            cout << "Estudiante modificado correctamente.\n";
     } else {
-        cout << "Error al abrir los archivos.\n";
+        cout << "No se modifico correctamente al estudiante" <<endl;
     }
 }
 
@@ -130,6 +136,10 @@ int main() {
             default: cout << "Opción inválida.\n";
         }
 
+    } while (opcion != 5);
+
+    return 0;
+}
     } while (opcion != 5);
 
     return 0;
