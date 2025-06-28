@@ -51,11 +51,9 @@ void modificarEstudiante() {
 
         while (archivo >> e.nombre >> e.carnet >> e.edad) {
             if (e.carnet == buscado) {
-                // Se encontró el estudiante, se modifica
                 temp << e.nombre << " " << e.nombre << " " << e.edad << endl;
                 modificado = true;
 
-                // Mostrar al estudiante modificado
                 cout << "\nEstudiante modificado:\n";
                 cout << "Nombre: " << e.nombre << endl;
                 cout << "Carnet: " << e.carnet << endl;
